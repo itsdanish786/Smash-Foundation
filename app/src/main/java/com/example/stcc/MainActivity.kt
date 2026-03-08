@@ -119,7 +119,7 @@ fun MainScreen(isDarkMode: Boolean, onThemeChange: (Boolean) -> Unit) {
     var isLoggedIn by remember { mutableStateOf(true) }
     val webView = remember { mutableStateOf<WebView?>(null) }
     val context = LocalContext.current
-    val updateUrl = "https://github.com/itsdanish786/Smash-Foundation/releases/download/v1.0.0/STCC.apk"
+    val updateUrl = "https://github.com/itsdanish786/Smash-Foundation/releases/latest"
 
     BackHandler(enabled = currentScreen != Screen.HOME || drawerState.isOpen) {
         if (drawerState.isOpen) {

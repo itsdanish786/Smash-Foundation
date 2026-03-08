@@ -119,6 +119,7 @@ fun MainScreen(isDarkMode: Boolean, onThemeChange: (Boolean) -> Unit) {
     var isLoggedIn by remember { mutableStateOf(true) }
     val webView = remember { mutableStateOf<WebView?>(null) }
     val context = LocalContext.current
+    val updateUrl = "https://github.com/itsdanish786/Smash-Foundation/releases/download/v1.0.0/STCC.apk"
 
     BackHandler(enabled = currentScreen != Screen.HOME || drawerState.isOpen) {
         if (drawerState.isOpen) {
@@ -242,6 +243,17 @@ fun MainScreen(isDarkMode: Boolean, onThemeChange: (Boolean) -> Unit) {
                         isSelected = currentScreen == Screen.SETTINGS,
                         onClick = {
                             currentScreen = Screen.SETTINGS
+                            scope.launch { drawerState.close() }
+                        }
+                    )
+
+                    DrawerMenuItem(
+                        label = "App Update",
+                        icon = Icons.Default.Update,
+                        isSelected = false,
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl))
+                            context.startActivity(intent)
                             scope.launch { drawerState.close() }
                         }
                     )
@@ -385,6 +397,7 @@ fun DrawerMenuItem(
 fun SettingsView(isDarkMode: Boolean, onThemeChange: (Boolean) -> Unit) {
     var notificationsEnabled by remember { mutableStateOf(true) }
     val context = LocalContext.current
+    val updateUrl = "https://github.com/itsdanish786/Smash-Foundation/releases/download/v1.0.0/STCC.apk"
 
     Column(
         modifier = Modifier
@@ -439,7 +452,8 @@ fun SettingsView(isDarkMode: Boolean, onThemeChange: (Boolean) -> Unit) {
             subtitle = "Check for the latest version",
             icon = Icons.Default.Update,
             onClick = {
-                Toast.makeText(context, "You are using the latest version (v1.0.0)", Toast.LENGTH_SHORT).show()
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl))
+                context.startActivity(intent)
             }
         )
     }
